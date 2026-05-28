@@ -604,6 +604,39 @@ st.markdown(
         color: #238EDB !important;
         border: 1px solid #238EDB !important;
     }}
+
+    @media (max-width: 768px) {{
+        .st-key-premium_calculator_box {{
+            width: 100%;
+            padding: 18px;
+            margin-top: 20px;
+            border-radius: 18px;
+        }}
+
+        .premium-calculator-title {{
+            font-size: 26px;
+        }}
+
+        .st-key-premium_calculator_box h2,
+        .st-key-premium_calculator_box h3 {{
+            font-size: 21px;
+        }}
+
+        .st-key-premium_calculator_box label,
+        .st-key-premium_calculator_box p {{
+            font-size: 15px;
+        }}
+
+        .st-key-premium_calculator_box [role="radiogroup"] {{
+            flex-wrap: wrap;
+            gap: 8px;
+        }}
+
+        div.stButton > button {{
+            width: 100%;
+            padding: 12px 16px;
+        }}
+    }}
     </style>
     """,
     unsafe_allow_html=True
@@ -670,6 +703,61 @@ components.html(
         margin-top: 15px;
         text-shadow: 0px 0px 0px black;
     }}
+
+    @media (max-width: 768px) {{
+        .text-box {{
+            height: auto;
+            min-height: 360px;
+            padding: 30px 15px;
+            justify-content: center;
+            align-items: center;
+        }}
+
+        .content-row {{
+            flex-direction: column;
+            gap: 18px;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+        }}
+
+        .side-img {{
+            width: 110px;
+        }}
+
+        .side-text {{
+            font-size: 17px;
+            margin-top: 8px;
+        }}
+
+        .hero-text {{
+            font-size: 36px;
+            text-align: center;
+            line-height: 1.1;
+            letter-spacing: 1px;
+        }}
+
+        .tagline {{
+            font-size: 16px;
+            text-align: center;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }}
+    }}
+
+    @media (max-width: 480px) {{
+        .hero-text {{
+            font-size: 30px;
+        }}
+
+        .tagline {{
+            font-size: 14px;
+        }}
+
+        .side-img {{
+            width: 95px;
+        }}
+    }}
     </style>
 
     <div class="text-box">
@@ -678,7 +766,7 @@ components.html(
             <div class="left-side">
                 <img class="side-img" src="data:image/png;base64,{side_image}">
                 <div class="side-text">
-                    Adevali<br>                    Insurance
+                    Adevali<br>Insurance
                 </div>
             </div>
 
@@ -804,6 +892,59 @@ components.html(
         border-radius: 15px;
         margin-top: 15px;
     }
+
+    @media (max-width: 768px) {
+        .box-section {
+            width: 100%;
+            align-items: center;
+        }
+
+        .box-row {
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .info-box,
+        .second-box,
+        .bottom-box,
+        .third-box {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            min-height: auto;
+            font-size: 16px;
+            line-height: 1.35;
+            padding: 18px;
+            border-radius: 18px;
+            box-sizing: border-box;
+        }
+
+        .bottom-box,
+        .third-box {
+            margin-top: 20px;
+        }
+
+        .map-frame {
+            height: 180px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .info-box,
+        .second-box,
+        .bottom-box,
+        .third-box {
+            font-size: 15px;
+            line-height: 1.4;
+            padding: 16px;
+        }
+
+        .map-frame {
+            height: 165px;
+        }
+    }
     </style>
 
     <div class="box-section">
@@ -882,7 +1023,8 @@ components.html(
 
     </div>
     """,
-    height=1450
+    height=1450,
+    scrolling=True
 )
 
 
