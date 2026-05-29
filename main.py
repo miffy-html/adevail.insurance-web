@@ -545,7 +545,7 @@ st.markdown(
 
     .st-key-premium_calculator_box {{
         max-width: 1180px;
-        margin: 30px auto 20px auto;
+        margin: 5px auto 20px auto;
         background-color: #FFFFFF !important;
         background: #FFFFFF !important;
         color: #238EDB !important;
@@ -609,7 +609,7 @@ st.markdown(
         .st-key-premium_calculator_box {{
             width: 100%;
             padding: 18px;
-            margin-top: 20px;
+            margin-top: 5px;
             border-radius: 18px;
         }}
 
@@ -1023,7 +1023,7 @@ components.html(
 
     </div>
     """,
-    height=1450,
+    height=1340,
     scrolling=True
 )
 
@@ -1099,6 +1099,18 @@ with st.container(border=True, key="premium_calculator_box"):
         horizontal=True
     )
 
+    if dangerous_hobby_answer == "yes":
+        dangerous_hobby_detail = st.text_input(
+            "Please type your dangerous hobby"
+        )
+    else:
+        dangerous_hobby_detail = "None"
+
+    show_actuarial_calculation = st.toggle(
+        "Show actuarial calculation",
+        value=False
+    )
+
     calculate_button = st.button("Calculate your Premium")
 
     if calculate_button:
@@ -1140,6 +1152,7 @@ with st.container(border=True, key="premium_calculator_box"):
                         "Smoker status": underwriting_info["smoker_level"],
                         "Alcohol status": underwriting_info["alcohol_level"],
                         "Dangerous hobby": underwriting_info["dangerous_hobby"],
+                        "Dangerous hobby detail": dangerous_hobby_detail,
                         "Smoker loading": f"{underwriting_info['smoker_loading']:.0%}",
                         "Alcohol loading": f"{underwriting_info['alcohol_loading']:.0%}",
                         "Dangerous hobby loading": f"{underwriting_info['dangerous_hobby_loading']:.0%}",
@@ -1220,7 +1233,7 @@ with st.container(border=True, key="premium_calculator_box"):
 
             result_table = pd.DataFrame(result_rows)
 
-            st.subheader("Premium Results for Yearly and Monthly Paymet")
+            st.subheader("Premium (Level) Results for a Yearly and Monthly Payment:")
 
             st.dataframe(
                 result_table,
