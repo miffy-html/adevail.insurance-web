@@ -560,6 +560,11 @@ st.markdown(
         border: none !important;
     }}
 
+    .st-key-hero_logo img {{
+        margin-left: 100px;
+        margin-top: -5px;
+    }}
+
     .hero-title {{
         color: white;
         font-size: 67px;
@@ -583,7 +588,8 @@ st.markdown(
         font-size: 22px;
         font-weight: 700;
         text-align: center;
-        margin-top: 10px;
+        margin-top: -20px;
+        margin-left: 105px;
         text-shadow: 2px 2px 6px black;
     }}
 
@@ -766,6 +772,11 @@ st.markdown(
             padding-top: 0.5rem;
         }}
 
+        .st-key-hero_logo img {{
+            margin-left: -8px;
+            margin-top: -8px;
+        }}
+
         .hero-title {{
             font-size: 36px;
             text-align: center;
@@ -784,6 +795,8 @@ st.markdown(
 
         .logo-name {{
             font-size: 17px;
+            margin-top: 0px;
+            margin-left: -8px;
         }}
 
         .st-key-about_box,
@@ -879,7 +892,7 @@ hero_logo_col, hero_text_col = st.columns([1, 4], vertical_alignment="center")
 
 with hero_logo_col:
     with st.container(key="hero_logo"):
-        st.image(SIDE_IMAGE_FILE, width=175)
+        st.image(SIDE_IMAGE_FILE, width=129)
 
         st.markdown(
             """
