@@ -519,7 +519,6 @@ def make_underwriting_info(smoker_level, alcohol_level, dangerous_hobby):
 # =========================
 
 background_image = get_base64_image(BACKGROUND_FILE)
-side_image = get_base64_image(SIDE_IMAGE_FILE)
 
 st.markdown(
     f"""
@@ -532,181 +531,121 @@ st.markdown(
         background-position: center;
         background-repeat: no-repeat;
         background-attachment: fixed;
+        font-family: 'Josefin Sans', sans-serif;
     }}
 
     [data-testid="stHeader"] {{
         background-color: transparent;
     }}
 
-    .stApp h1, .stApp h2, .stApp h3, .stApp p, .stApp label {{
-        color: white;
+    .block-container {{
+        max-width: 1220px;
+        padding-top: 1rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }}
+
+    .stApp h1,
+    .stApp h2,
+    .stApp h3,
+    .stApp p,
+    .stApp label {{
         font-family: 'Josefin Sans', sans-serif;
     }}
 
-    .text-box {{
-        height: 375px;
-        padding: 60px;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        box-sizing: border-box;
+    .st-key-hero_logo,
+    .st-key-hero_text {{
+        background: transparent !important;
+        border: none !important;
     }}
 
-    .content-row {{
-        display: flex;
-        align-items: center;
-        gap: 35px;
+    .hero-title {{
+        color: white;
+        font-size: 67px;
+        font-weight: 800;
+        line-height: 1.15;
+        letter-spacing: 2px;
+        margin-top: 35px;
     }}
 
-    .left-side {{
-        text-align: center;
+    .hero-tagline {{
+        color: yellow;
+        font-size: 26px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        margin-top: 15px;
+        margin-bottom: 35px;
     }}
 
-    .side-img {{
-        width: 175px;
-        height: auto;
-    }}
-
-    .side-text {{
+    .logo-name {{
         color: white;
         font-size: 22px;
         font-weight: 700;
+        text-align: center;
         margin-top: 10px;
         text-shadow: 2px 2px 6px black;
     }}
 
-    .hero-text {{
-        color: white;
-        font-size: 67.5px;
+    .section-title {{
+        font-size: 30px;
         font-weight: 800;
-        line-height: 1.15;
-        text-align: left;
-        letter-spacing: 2px;
-        text-shadow: 0px 0px 0px black;
+        margin-bottom: 12px;
     }}
 
-    .tagline {{
-        color: yellow;
-        font-size: 26px;
-        font-weight: 800;
-        line-height: 1.15;
-        text-align: left;
-        letter-spacing: 2px;
-        margin-top: 15px;
-        text-shadow: 0px 0px 0px black;
+    .box-text {{
+        font-size: 22px;
+        line-height: 1.35;
     }}
 
-    .box-section {{
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }}
-
-    .box-row {{
-        width: 100%;
-        display: flex;
-        gap: 30px;
-        align-items: flex-start;
-        justify-content: center;
-    }}
-
-    .info-box {{
-        width: 800px;
+    .st-key-about_box {{
+        background-color: #238EDB !important;
+        color: white !important;
+        padding: 25px;
+        border-radius: 20px;
         min-height: 500px;
-        background-color: #238EDB;
-        color: white;
-        padding: 25px;
-        border-radius: 20px;
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
-        text-align: left;
-        font-size: 24px;
         box-sizing: border-box;
-        font-family: 'Josefin Sans', sans-serif;
     }}
 
-    .second-box {{
-        width: 350px;
+    .st-key-contact_box {{
+        background-color: white !important;
+        color: #238EDB !important;
+        padding: 25px;
+        border-radius: 20px;
         min-height: 500px;
-        background-color: #FFFFFF;
-        color: #238EDB;
-        padding: 25px;
-        border-radius: 20px;
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
-        text-align: left;
-        font-size: 24px;
-        font-weight: 400;
         box-sizing: border-box;
-        font-family: 'Josefin Sans', sans-serif;
     }}
 
-    .bottom-box {{
-        width: 1180px;
-        min-height: 180px;
-        background-color: #FFFFFF;
-        color: #238EDB;
+    .st-key-mission_box {{
+        background-color: white !important;
+        color: #238EDB !important;
+        padding: 25px;
+        border-radius: 20px;
         margin-top: 30px;
-        padding: 25px;
-        border-radius: 20px;
-        text-align: left;
-        font-size: 24px;
-        font-weight: 400;
         box-sizing: border-box;
-        font-family: 'Josefin Sans', sans-serif;
     }}
 
-    .third-box {{
-        width: 1180px;
-        min-height: 580px;
-        background-color: #238EDB;
-        color: #FFFFFF;
+    .st-key-products_box {{
+        background-color: #238EDB !important;
+        color: white !important;
+        padding: 25px;
+        border-radius: 20px;
         margin-top: 30px;
-        padding: 25px;
-        border-radius: 20px;
-        text-align: left;
-        font-size: 24px;
-        font-weight: 400;
         box-sizing: border-box;
-        font-family: 'Josefin Sans', sans-serif;
-    }}
-
-    .info-title,
-    .second-title,
-    .bottom-title,
-    .third-title {{
-        font-weight: 800;
-        margin-bottom: 10px;
-        font-family: 'Josefin Sans', sans-serif;
-    }}
-
-    .map-frame {{
-        width: 100%;
-        height: 210px;
-        border: 0;
-        border-radius: 15px;
-        margin-top: 15px;
     }}
 
     .st-key-premium_calculator_box {{
         max-width: 1180px;
         margin: 30px auto 20px auto;
-        background-color: #FFFFFF !important;
-        background: #FFFFFF !important;
+        background-color: white !important;
         color: #238EDB !important;
         padding: 25px;
         border-radius: 20px;
         border: none !important;
-        font-family: 'Josefin Sans', sans-serif;
         box-sizing: border-box;
     }}
 
     .st-key-premium_calculator_box > div {{
-        background-color: #FFFFFF !important;
-        background: #FFFFFF !important;
+        background-color: white !important;
         border-radius: 20px;
     }}
 
@@ -728,17 +667,10 @@ st.markdown(
         font-size: 32px;
         font-weight: 800;
         margin-bottom: 20px;
-        font-family: 'Josefin Sans', sans-serif;
-    }}
-
-    div[data-testid="stDataFrame"] {{
-        background-color: white;
-        border-radius: 20px;
-        padding: 10px;
     }}
 
     div.stButton > button {{
-        background-color: #FFFFFF !important;
+        background-color: white !important;
         color: #238EDB !important;
         border: 1px solid #238EDB !important;
         border-radius: 15px;
@@ -753,87 +685,57 @@ st.markdown(
         border: 1px solid #238EDB !important;
     }}
 
+    div[data-testid="stDataFrame"] {{
+        background-color: white;
+        border-radius: 20px;
+        padding: 10px;
+    }}
+
     @media (max-width: 768px) {{
-        .text-box {{
-            height: auto;
-            min-height: 360px;
-            padding: 30px 15px;
-            justify-content: center;
-            align-items: center;
+        .block-container {{
+            padding-left: 1rem;
+            padding-right: 1rem;
+            padding-top: 0.5rem;
         }}
 
-        .content-row {{
-            flex-direction: column;
-            gap: 18px;
-            text-align: center;
-            align-items: center;
-            justify-content: center;
-        }}
-
-        .side-img {{
-            width: 110px;
-        }}
-
-        .side-text {{
-            font-size: 17px;
-            margin-top: 8px;
-        }}
-
-        .hero-text {{
+        .hero-title {{
             font-size: 36px;
             text-align: center;
             line-height: 1.1;
             letter-spacing: 1px;
+            margin-top: 10px;
         }}
 
-        .tagline {{
+        .hero-tagline {{
             font-size: 16px;
             text-align: center;
             letter-spacing: 1px;
             margin-top: 10px;
+            margin-bottom: 20px;
         }}
 
-        .box-section {{
-            width: 100%;
-            align-items: center;
+        .logo-name {{
+            font-size: 17px;
         }}
 
-        .box-row {{
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-            justify-content: flex-start;
+        .section-title {{
+            font-size: 24px;
         }}
 
-        .info-box,
-        .second-box,
-        .bottom-box,
-        .third-box {{
-            width: 100%;
-            max-width: 100%;
-            height: auto;
-            min-height: auto;
+        .box-text {{
             font-size: 16px;
-            line-height: 1.35;
-            padding: 18px;
-            border-radius: 18px;
-            box-sizing: border-box;
+            line-height: 1.4;
         }}
 
-        .bottom-box,
-        .third-box {{
-            margin-top: 20px;
-        }}
-
-        .map-frame {{
-            height: 180px;
-        }}
-
+        .st-key-about_box,
+        .st-key-contact_box,
+        .st-key-mission_box,
+        .st-key-products_box,
         .st-key-premium_calculator_box {{
-            width: 100%;
             padding: 18px;
-            margin-top: 20px;
             border-radius: 18px;
+            min-height: auto;
+            margin-top: 20px;
         }}
 
         .premium-calculator-title {{
@@ -862,29 +764,16 @@ st.markdown(
     }}
 
     @media (max-width: 480px) {{
-        .hero-text {{
+        .hero-title {{
             font-size: 30px;
         }}
 
-        .tagline {{
+        .hero-tagline {{
             font-size: 14px;
         }}
 
-        .side-img {{
-            width: 95px;
-        }}
-
-        .info-box,
-        .second-box,
-        .bottom-box,
-        .third-box {{
+        .box-text {{
             font-size: 15px;
-            line-height: 1.4;
-            padding: 16px;
-        }}
-
-        .map-frame {{
-            height: 165px;
         }}
     }}
     </style>
@@ -892,117 +781,128 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.markdown(
-    f"""
-    <div class="text-box">
-        <div class="content-row">
 
-            <div class="left-side">
-                <img class="side-img" src="data:image/png;base64,{side_image}">
-                <div class="side-text">
-                    Adevali<br>Insurance
-                </div>
+# =========================
+# HERO SECTION
+# =========================
+
+hero_logo_col, hero_text_col = st.columns([1, 4], vertical_alignment="center")
+
+with hero_logo_col:
+    with st.container(key="hero_logo"):
+        st.image(SIDE_IMAGE_FILE, width=175)
+
+        st.markdown(
+            """
+            <div class="logo-name">
+                Adevali<br>Insurance
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+with hero_text_col:
+    with st.container(key="hero_text"):
+        st.markdown(
+            """
+            <div class="hero-title">
+                Smart Life<br>
+                Protection Solutions
             </div>
 
-            <div>
-                <div class="hero-text">
-                    Smart Life<br>
-                    Protection Solutions
-                </div>
-
-                <div class="tagline">
-                    SECURE LIFE, SECURE LOVE
-                </div>
+            <div class="hero-tagline">
+                SECURE LIFE, SECURE LOVE
             </div>
+            """,
+            unsafe_allow_html=True
+        )
 
+
+# =========================
+# INFORMATION BOXES
+# =========================
+
+about_col, contact_col = st.columns([2.2, 1], gap="large")
+
+with about_col:
+    with st.container(key="about_box"):
+        st.markdown(
+            """
+            <div class="section-title">About Us</div>
+
+            <div class="box-text">
+                Adevali Insurance is a student-created insurance company designed to provide simple, affordable, and reliable life insurance protection. Our goal is to help customers feel safer about the future by offering insurance products that are easy to understand and suitable for different needs.
+
+                <br><br>Adevali Insurance was developed as a university project by four students from President University, namely:
+                <br><br>‣ Alexandra Mercy Christani (021202400008);
+                <br>‣ Defira Lubnaziza (021202400004);
+                <br>‣ Liska Desryani Purba (021202400027);
+                <br>‣ Valerion Theodore Chandratama (021202400017).
+
+                <br><br>Through this project, we aim to combine actuarial knowledge, financial planning, and customer-focused service to create an insurance product that is both useful for policyholders and sustainable for the company.
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+with contact_col:
+    with st.container(key="contact_box"):
+        st.markdown(
+            """
+            <div class="section-title">Contact Us</div>
+
+            <div class="box-text">
+                ☏ 0878-9191-7372<br>
+                ✉︎ adevali.help@gmail.com<br>
+                𖤣 President University, <br>
+                Jl. Ki Hajar Dewantara, Mekarmukti, Kec. Cikarang Utara, Kabupaten Bekasi, Jawa Barat 17530.
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+        components.iframe(
+            "https://www.google.com/maps?q=President%20University%20Jl.%20Ki%20Hajar%20Dewantara%20Kota%20Jababeka%20Cikarang%20Baru%20Bekasi&output=embed",
+            height=220,
+            scrolling=False
+        )
+
+
+with st.container(key="mission_box"):
+    st.markdown(
+        """
+        <div class="section-title">Our Mission</div>
+
+        <div class="box-text">
+            To provide life insurance protection that is simple, affordable, and trustworthy. Adevali Insurance aims to help individuals and families prepare for unexpected risks by offering clear benefits, fair premiums, and reliable financial protection.
+
+            <br><br>We are committed to creating insurance products that are easy to understand, accessible to customers, and designed with care to support a safer and more secure future.
         </div>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+        """,
+        unsafe_allow_html=True
+    )
 
-st.markdown(
-    """
-    <div class="box-section">
 
-        <div class="box-row">
-            <div class="info-box">
-                <div>
-                    <div class="info-title">
-                        About Us
-                    </div>
+with st.container(key="products_box"):
+    st.markdown(
+        """
+        <div class="section-title">Our Products</div>
 
-                    <div>
-                        Adevali Insurance is a student-created insurance company designed to provide simple, affordable, and reliable life insurance protection. Our goal is to help customers feel safer about the future by offering insurance products that are easy to understand and suitable for different needs.
+        <div class="box-text">
+            Adevali Insurance offers three life insurance protection tiers designed to match different customer needs and budgets. Each tier provides protection for accident, illness, and other causes, with different benefit amounts depending on the selected package.
 
-                        <br><br>Adevali Insurance was developed as a university project by four students from President University, namely:
-                        <br><br>‣ Alexandra Mercy Christani (021202400008);
-                        <br>‣ Defira Lubnaziza (021202400004);
-                        <br>‣ Liska Desryani Purba (021202400027);
-                        <br>‣ Valerion Theodore Chandratama (021202400017).
-                        <br><br>Through this project, we aim to combine actuarial knowledge, financial planning, and customer-focused service to create an insurance product that is both useful for policyholders and sustainable for the company.
-                    </div>
-                </div>
-            </div>
+            <br><br><b>Tier 1: Premium Protection</b>
+            <br>The strongest package offered by Adevali Insurance, providing the highest level of financial protection. This tier gives an accident benefit of Rp2,000,000,000, an illness benefit of Rp1,000,000,000 after the policy has been active for 5 years, and an other causes benefit of Rp1,500,000,000. It is suitable for customers who want maximum protection for themselves and their loved ones.
 
-            <div class="second-box">
-                <div>
-                    <div class="second-title">
-                        Contact Us
-                    </div>
+            <br><br><b>Tier 2: Standard Protection</b>
+            <br>A balanced level of protection with higher benefits than Tier 3. This package is suitable for customers who want stronger financial security while still maintaining an affordable premium. This tier provides an accident benefit of Rp1,000,000,000, an illness benefit of Rp750,000,000 after the policy has been active for 5 years, and an other causes benefit of Rp950,000,000.
 
-                    <div>
-                        ☏ 0878-9191-7372<br>
-                        ✉︎ adevali.help@gmail.com<br>
-                        𖤣 President University, <br> 
-                        Jl. Ki Hajar Dewantara, Mekarmukti, Kec. Cikarang Utara, Kabupaten Bekasi, Jawa Barat 17530.
-                    </div>
-
-                    <iframe
-                        class="map-frame"
-                        src="https://www.google.com/maps?q=President%20University%20Jl.%20Ki%20Hajar%20Dewantara%20Kota%20Jababeka%20Cikarang%20Baru%20Bekasi&output=embed"
-                        allowfullscreen
-                        loading="lazy">
-                    </iframe>
-                </div>  
-            </div>
+            <br><br><b>Tier 3: Basic Protection</b>
+            <br>The most affordable package, suitable for customers who want essential protection at a lower premium. This tier provides an accident benefit of Rp500,000,000, an illness benefit of Rp300,000,000 after the policy has been active for 5 years, and an other causes benefit of Rp475,000,000.
         </div>
-
-        <div class="bottom-box">
-            <div class="bottom-title">
-                Our Mission
-            </div>
-
-            <div>
-                To provide life insurance protection that is simple, affordable, and trustworthy. Adevali Insurance aims to help individuals and families prepare for unexpected risks by offering clear benefits, fair premiums, and reliable financial protection.
-
-                <br><br>We are committed to creating insurance products that are easy to understand, accessible to customers, and designed with care to support a safer and more secure future.
-            </div>
-        </div>
-
-        <div class="third-box">
-            <div class="third-title">
-                Our Products
-            </div>
-
-            <div>
-                Adevali Insurance offers three life insurance protection tiers designed to match different customer needs and budgets. Each tier provides protection for accident, illness, and other causes, with different benefit amounts depending on the selected package.<br>
-
-                <br><b>Tier 1: Premium Protection</b>
-                <br>The strongest package offered by Adevali Insurance, providing the highest level of financial protection. This tier gives an accident benefit of Rp2,000,000,000, an illness benefit of Rp1,000,000,000 after the policy has been active for 5 years, and an other causes benefit of Rp1,500,000,000. It is suitable for customers who want maximum protection for themselves and their loved ones.<br>
-
-                <br><b>Tier 2: Standard Protection</b>
-                <br>A balanced level of protection with higher benefits than Tier 3. This package is suitable for customers who want stronger financial security while still maintaining an affordable premium. This tier provides an accident benefit of Rp1,000,000,000, an illness benefit of Rp750,000,000 after the policy has been active for 5 years, and an other causes benefit of Rp950,000,000.<br>
-
-                <br><b>Tier 3: Basic Protection</b>
-                <br>The most affordable package, suitable for customers who want essential protection at a lower premium. This tier provides an accident benefit of Rp500,000,000, an illness benefit of Rp300,000,000 after the policy has been active for 5 years, and an other causes benefit of Rp475,000,000.<br>
-            </div>
-        </div>
-
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+        """,
+        unsafe_allow_html=True
+    )
 
 
 # =========================
