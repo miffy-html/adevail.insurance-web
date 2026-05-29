@@ -597,6 +597,16 @@ st.markdown(
         line-height: 1.35;
     }}
 
+    .map-frame {{
+        width: 100%;
+        height: 220px;
+        border: 0;
+        border-radius: 15px;
+        margin-top: 15px;
+        pointer-events: none;
+        overflow: hidden;
+    }}
+
     .st-key-about_box {{
         background-color: #238EDB !important;
         color: white !important;
@@ -725,6 +735,10 @@ st.markdown(
         .box-text {{
             font-size: 16px;
             line-height: 1.4;
+        }}
+
+        .map-frame {{
+            height: 200px;
         }}
 
         .st-key-about_box,
@@ -857,14 +871,16 @@ with contact_col:
                 𖤣 President University, <br>
                 Jl. Ki Hajar Dewantara, Mekarmukti, Kec. Cikarang Utara, Kabupaten Bekasi, Jawa Barat 17530.
             </div>
+
+            <iframe
+                class="map-frame"
+                src="https://www.google.com/maps?q=President%20University%20Jl.%20Ki%20Hajar%20Dewantara%20Kota%20Jababeka%20Cikarang%20Baru%20Bekasi&output=embed"
+                allowfullscreen
+                loading="lazy"
+                scrolling="no">
+            </iframe>
             """,
             unsafe_allow_html=True
-        )
-
-        components.iframe(
-            "https://www.google.com/maps?q=President%20University%20Jl.%20Ki%20Hajar%20Dewantara%20Kota%20Jababeka%20Cikarang%20Baru%20Bekasi&output=embed",
-            height=220,
-            scrolling=False
         )
 
 
