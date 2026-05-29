@@ -543,9 +543,157 @@ st.markdown(
         font-family: 'Josefin Sans', sans-serif;
     }}
 
+    .text-box {{
+        height: 375px;
+        padding: 60px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        box-sizing: border-box;
+    }}
+
+    .content-row {{
+        display: flex;
+        align-items: center;
+        gap: 35px;
+    }}
+
+    .left-side {{
+        text-align: center;
+    }}
+
+    .side-img {{
+        width: 175px;
+        height: auto;
+    }}
+
+    .side-text {{
+        color: white;
+        font-size: 22px;
+        font-weight: 700;
+        margin-top: 10px;
+        text-shadow: 2px 2px 6px black;
+    }}
+
+    .hero-text {{
+        color: white;
+        font-size: 67.5px;
+        font-weight: 800;
+        line-height: 1.15;
+        text-align: left;
+        letter-spacing: 2px;
+        text-shadow: 0px 0px 0px black;
+    }}
+
+    .tagline {{
+        color: yellow;
+        font-size: 26px;
+        font-weight: 800;
+        line-height: 1.15;
+        text-align: left;
+        letter-spacing: 2px;
+        margin-top: 15px;
+        text-shadow: 0px 0px 0px black;
+    }}
+
+    .box-section {{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }}
+
+    .box-row {{
+        width: 100%;
+        display: flex;
+        gap: 30px;
+        align-items: flex-start;
+        justify-content: center;
+    }}
+
+    .info-box {{
+        width: 800px;
+        min-height: 500px;
+        background-color: #238EDB;
+        color: white;
+        padding: 25px;
+        border-radius: 20px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        text-align: left;
+        font-size: 24px;
+        box-sizing: border-box;
+        font-family: 'Josefin Sans', sans-serif;
+    }}
+
+    .second-box {{
+        width: 350px;
+        min-height: 500px;
+        background-color: #FFFFFF;
+        color: #238EDB;
+        padding: 25px;
+        border-radius: 20px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        text-align: left;
+        font-size: 24px;
+        font-weight: 400;
+        box-sizing: border-box;
+        font-family: 'Josefin Sans', sans-serif;
+    }}
+
+    .bottom-box {{
+        width: 1180px;
+        min-height: 180px;
+        background-color: #FFFFFF;
+        color: #238EDB;
+        margin-top: 30px;
+        padding: 25px;
+        border-radius: 20px;
+        text-align: left;
+        font-size: 24px;
+        font-weight: 400;
+        box-sizing: border-box;
+        font-family: 'Josefin Sans', sans-serif;
+    }}
+
+    .third-box {{
+        width: 1180px;
+        min-height: 580px;
+        background-color: #238EDB;
+        color: #FFFFFF;
+        margin-top: 30px;
+        padding: 25px;
+        border-radius: 20px;
+        text-align: left;
+        font-size: 24px;
+        font-weight: 400;
+        box-sizing: border-box;
+        font-family: 'Josefin Sans', sans-serif;
+    }}
+
+    .info-title,
+    .second-title,
+    .bottom-title,
+    .third-title {{
+        font-weight: 800;
+        margin-bottom: 10px;
+        font-family: 'Josefin Sans', sans-serif;
+    }}
+
+    .map-frame {{
+        width: 100%;
+        height: 210px;
+        border: 0;
+        border-radius: 15px;
+        margin-top: 15px;
+    }}
+
     .st-key-premium_calculator_box {{
         max-width: 1180px;
-        margin: 5px auto 20px auto;
+        margin: 30px auto 20px auto;
         background-color: #FFFFFF !important;
         background: #FFFFFF !important;
         color: #238EDB !important;
@@ -606,105 +754,6 @@ st.markdown(
     }}
 
     @media (max-width: 768px) {{
-        .st-key-premium_calculator_box {{
-            width: 100%;
-            padding: 18px;
-            margin-top: 5px;
-            border-radius: 18px;
-        }}
-
-        .premium-calculator-title {{
-            font-size: 26px;
-        }}
-
-        .st-key-premium_calculator_box h2,
-        .st-key-premium_calculator_box h3 {{
-            font-size: 21px;
-        }}
-
-        .st-key-premium_calculator_box label,
-        .st-key-premium_calculator_box p {{
-            font-size: 15px;
-        }}
-
-        .st-key-premium_calculator_box [role="radiogroup"] {{
-            flex-wrap: wrap;
-            gap: 8px;
-        }}
-
-        div.stButton > button {{
-            width: 100%;
-            padding: 12px 16px;
-        }}
-    }}
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-components.html(
-    f"""
-    <style>
-    body {{
-        margin: 0;
-        background-color: transparent;
-        font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
-    }}
-
-    .text-box {{
-        height: 375px;
-        padding: 60px;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        box-sizing: border-box;
-    }}
-
-    .content-row {{
-        display: flex;
-        align-items: center;
-        gap: 35px;
-    }}
-
-    .left-side {{
-        text-align: center;
-    }}
-
-    .side-img {{
-        width: 175px;
-        height: auto;
-    }}
-
-    .side-text {{
-        color: white;
-        font-size: 22px;
-        font-weight: 700;
-        margin-top: 10px;
-        text-shadow: 2px 2px 6px black;
-    }}
-
-    .hero-text {{
-        color: white;
-        font-size: 67.5px;
-        font-weight: 800;
-        line-height: 1.15;
-        text-align: left;
-        letter-spacing: 2px;
-        text-shadow: 0px 0px 0px black;
-    }}
-
-    .tagline {{
-        color: yellow;
-        font-size: 26px;
-        font-weight: 800;
-        line-height: 1.15;
-        text-align: left;
-        letter-spacing: 2px;
-        margin-top: 15px;
-        text-shadow: 0px 0px 0px black;
-    }}
-
-    @media (max-width: 768px) {{
         .text-box {{
             height: auto;
             min-height: 360px;
@@ -743,6 +792,73 @@ components.html(
             letter-spacing: 1px;
             margin-top: 10px;
         }}
+
+        .box-section {{
+            width: 100%;
+            align-items: center;
+        }}
+
+        .box-row {{
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            justify-content: flex-start;
+        }}
+
+        .info-box,
+        .second-box,
+        .bottom-box,
+        .third-box {{
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            min-height: auto;
+            font-size: 16px;
+            line-height: 1.35;
+            padding: 18px;
+            border-radius: 18px;
+            box-sizing: border-box;
+        }}
+
+        .bottom-box,
+        .third-box {{
+            margin-top: 20px;
+        }}
+
+        .map-frame {{
+            height: 180px;
+        }}
+
+        .st-key-premium_calculator_box {{
+            width: 100%;
+            padding: 18px;
+            margin-top: 20px;
+            border-radius: 18px;
+        }}
+
+        .premium-calculator-title {{
+            font-size: 26px;
+        }}
+
+        .st-key-premium_calculator_box h2,
+        .st-key-premium_calculator_box h3 {{
+            font-size: 21px;
+        }}
+
+        .st-key-premium_calculator_box label,
+        .st-key-premium_calculator_box p {{
+            font-size: 15px;
+        }}
+
+        .st-key-premium_calculator_box [role="radiogroup"] {{
+            flex-wrap: wrap;
+            gap: 8px;
+        }}
+
+        div.stButton > button {{
+            width: 100%;
+            padding: 12px 16px;
+        }}
     }}
 
     @media (max-width: 480px) {{
@@ -757,9 +873,27 @@ components.html(
         .side-img {{
             width: 95px;
         }}
+
+        .info-box,
+        .second-box,
+        .bottom-box,
+        .third-box {{
+            font-size: 15px;
+            line-height: 1.4;
+            padding: 16px;
+        }}
+
+        .map-frame {{
+            height: 165px;
+        }}
     }}
     </style>
+    """,
+    unsafe_allow_html=True
+)
 
+st.markdown(
+    f"""
     <div class="text-box">
         <div class="content-row">
 
@@ -784,169 +918,11 @@ components.html(
         </div>
     </div>
     """,
-    height=400
+    unsafe_allow_html=True
 )
 
-components.html(
+st.markdown(
     """
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700;800&display=swap');
-
-    body {
-        margin: 0;
-        background: transparent;
-        font-family: 'Josefin Sans', sans-serif;
-    }
-
-    .box-section {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .box-row {
-        width: 100%;
-        display: flex;
-        gap: 30px;
-        align-items: flex-start;
-        justify-content: center;
-    }
-
-    .info-box {
-        width: 800px;
-        height: 500px;
-        background-color: #238EDB;
-        color: white;
-        padding: 25px;
-        border-radius: 20px;
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
-        text-align: left;
-        font-size: 24px;
-        box-sizing: border-box;
-        font-family: 'Josefin Sans', sans-serif;
-    }
-
-    .second-box {
-        width: 350px;
-        height: 500px;
-        background-color: #FFFFFF;
-        color: #238EDB;
-        padding: 25px;
-        border-radius: 20px;
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
-        text-align: left;
-        font-size: 24px;
-        font-weight: 400;
-        box-sizing: border-box;
-        font-family: 'Josefin Sans', sans-serif;
-    }
-
-    .bottom-box {
-        width: 1180px;
-        height: 180px;
-        background-color: #FFFFFF;
-        color: #238EDB;
-        margin-top: 30px;
-        padding: 25px;
-        border-radius: 20px;
-        text-align: left;
-        font-size: 24px;
-        font-weight: 400;
-        box-sizing: border-box;
-        font-family: 'Josefin Sans', sans-serif;
-    }
-
-    .third-box {
-        width: 1180px;
-        height: 580px;
-        background-color: #238EDB;
-        color: #FFFFFF;
-        margin-top: 30px;
-        padding: 25px;
-        border-radius: 20px;
-        text-align: left;
-        font-size: 24px;
-        font-weight: 400;
-        box-sizing: border-box;
-        font-family: 'Josefin Sans', sans-serif;
-    }
-
-    .info-title,
-    .second-title,
-    .bottom-title,
-    .third-title {
-        font-weight: 800;
-        margin-bottom: 10px;
-        font-family: 'Josefin Sans', sans-serif;
-    }
-
-    .map-frame {
-        width: 100%;
-        height: 210px;
-        border: 0;
-        border-radius: 15px;
-        margin-top: 15px;
-    }
-
-    @media (max-width: 768px) {
-        .box-section {
-            width: 100%;
-            align-items: center;
-        }
-
-        .box-row {
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-            justify-content: flex-start;
-        }
-
-        .info-box,
-        .second-box,
-        .bottom-box,
-        .third-box {
-            width: 100%;
-            max-width: 100%;
-            height: auto;
-            min-height: auto;
-            font-size: 16px;
-            line-height: 1.35;
-            padding: 18px;
-            border-radius: 18px;
-            box-sizing: border-box;
-        }
-
-        .bottom-box,
-        .third-box {
-            margin-top: 20px;
-        }
-
-        .map-frame {
-            height: 180px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .info-box,
-        .second-box,
-        .bottom-box,
-        .third-box {
-            font-size: 15px;
-            line-height: 1.4;
-            padding: 16px;
-        }
-
-        .map-frame {
-            height: 165px;
-        }
-    }
-    </style>
-
     <div class="box-section">
 
         <div class="box-row">
@@ -959,9 +935,12 @@ components.html(
                     <div>
                         Adevali Insurance is a student-created insurance company designed to provide simple, affordable, and reliable life insurance protection. Our goal is to help customers feel safer about the future by offering insurance products that are easy to understand and suitable for different needs.
 
-                     Adevali Insurance was developed as a university project by four students from President University, namely: <br>
-                     <br> ‣ Alexandra Mercy Christani (021202400008); <br> ‣ Defira Lubnaziza (021202400004);<br> ‣ Liska Desryani Purba (021202400027); <br> ‣ Valerion Theodore Chandratama ((021202400017).<br> 
-                     <br>Through this project, we aim to combine actuarial knowledge, financial planning, and customer-focused service to create an insurance product that is both useful for policyholders and sustainable for the company.
+                        <br><br>Adevali Insurance was developed as a university project by four students from President University, namely:
+                        <br><br>‣ Alexandra Mercy Christani (021202400008);
+                        <br>‣ Defira Lubnaziza (021202400004);
+                        <br>‣ Liska Desryani Purba (021202400027);
+                        <br>‣ Valerion Theodore Chandratama (021202400017).
+                        <br><br>Through this project, we aim to combine actuarial knowledge, financial planning, and customer-focused service to create an insurance product that is both useful for policyholders and sustainable for the company.
                     </div>
                 </div>
             </div>
@@ -997,7 +976,7 @@ components.html(
             <div>
                 To provide life insurance protection that is simple, affordable, and trustworthy. Adevali Insurance aims to help individuals and families prepare for unexpected risks by offering clear benefits, fair premiums, and reliable financial protection.
 
-                We are committed to creating insurance products that are easy to understand, accessible to customers, and designed with care to support a safer and more secure future.
+                <br><br>We are committed to creating insurance products that are easy to understand, accessible to customers, and designed with care to support a safer and more secure future.
             </div>
         </div>
 
@@ -1009,22 +988,20 @@ components.html(
             <div>
                 Adevali Insurance offers three life insurance protection tiers designed to match different customer needs and budgets. Each tier provides protection for accident, illness, and other causes, with different benefit amounts depending on the selected package.<br>
 
-<br>Tier 1: Premium Protection
-<br>The strongest package offered by Adevali Insurance, providing the highest level of financial protection. This tier gives an accident benefit of Rp2,000,000,000, an illness benefit of Rp1,000,000,000 after the policy has been active for 5 years, and an other causes benefit of Rp1,500,000,000. It is suitable for customers who want maximum protection for themselves and their loved ones.<br>
+                <br><b>Tier 1: Premium Protection</b>
+                <br>The strongest package offered by Adevali Insurance, providing the highest level of financial protection. This tier gives an accident benefit of Rp2,000,000,000, an illness benefit of Rp1,000,000,000 after the policy has been active for 5 years, and an other causes benefit of Rp1,500,000,000. It is suitable for customers who want maximum protection for themselves and their loved ones.<br>
 
-<br>Tier 2: Standard Protection
-<br>A balanced level of protection with higher benefits than Tier 3. This package is suitable for customers who want stronger financial security while still maintaining an affordable premium. This tier provides an accident benefit of Rp1,000,000,000, an illness benefit of Rp750,000,000 after the policy has been active for 5 years, and an other causes benefit of Rp950,000,000.<br>
+                <br><b>Tier 2: Standard Protection</b>
+                <br>A balanced level of protection with higher benefits than Tier 3. This package is suitable for customers who want stronger financial security while still maintaining an affordable premium. This tier provides an accident benefit of Rp1,000,000,000, an illness benefit of Rp750,000,000 after the policy has been active for 5 years, and an other causes benefit of Rp950,000,000.<br>
 
-<br>Tier 3: Basic Protection
-<br>The most affordable package, suitable for customers who want essential protection at a lower premium. This tier provides an accident benefit of Rp500,000,000, an illness benefit of Rp300,000,000 after the policy has been active for 5 years, and an other causes benefit of Rp475,000,000.<br>
-
+                <br><b>Tier 3: Basic Protection</b>
+                <br>The most affordable package, suitable for customers who want essential protection at a lower premium. This tier provides an accident benefit of Rp500,000,000, an illness benefit of Rp300,000,000 after the policy has been active for 5 years, and an other causes benefit of Rp475,000,000.<br>
             </div>
         </div>
 
     </div>
     """,
-    height=1340,
-    scrolling=True
+    unsafe_allow_html=True
 )
 
 
