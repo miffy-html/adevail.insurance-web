@@ -12,6 +12,8 @@ BACKGROUND_FILE = APP_DIR / "Copy of Flyer Life Insurance.png"
 SIDE_IMAGE_FILE = APP_DIR / "logow.png"
 MORTALITY_FILE = APP_DIR / "Mortality_Table.xlsx"
 
+GOOGLE_SHEET_PREVIEW_URL = "https://docs.google.com/spreadsheets/d/10yvLXwXma5l2KadM2eORwuBoJrM2RzxQ/preview"
+
 
 # =========================
 # HELPER FUNCTIONS
@@ -32,6 +34,10 @@ def rupiah(value):
 
 def rupiah_no_decimal(value):
     return f"Rp{value:,.0f}"
+
+
+def percent(value):
+    return f"{value:.0%}"
 
 
 def standardize_mortality_columns(table):
@@ -514,6 +520,181 @@ def make_underwriting_info(smoker_level, alcohol_level, dangerous_hobby):
     }
 
 
+def show_small_detail_box(box_key, title, value_text):
+    with st.container(key=box_key):
+        st.markdown(f"### {title}")
+        st.markdown(value_text)
+
+
+def show_detail_boxes_two_columns(detail_boxes):
+    for index in range(0, len(detail_boxes), 2):
+        detail_col_1, detail_col_2 = st.columns(2, gap="medium")
+
+        with detail_col_1:
+            detail_box = detail_boxes[index]
+            show_small_detail_box(
+                box_key=detail_box["box_key"],
+                title=detail_box["title"],
+                value_text=detail_box["value_text"]
+            )
+
+        if index + 1 < len(detail_boxes):
+            with detail_col_2:
+                detail_box = detail_boxes[index + 1]
+                show_small_detail_box(
+                    box_key=detail_box["box_key"],
+                    title=detail_box["title"],
+                    value_text=detail_box["value_text"]
+                )
+
+
+def show_tier_calculation_box(
+    tier_box_key,
+    apv_box_key,
+    annuity_box_key,
+    net_premium_box_key,
+    gross_premium_box_key,
+    detail_box_prefix,
+    tier_title,
+    tier_data,
+    underwriting_info,
+    dangerous_hobby_detail
+):
+    with st.container(key=tier_box_key):
+        st.markdown(
+            f"""
+            <div class="tier-main-title">
+                {tier_title}
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+        apv_col, annuity_col = st.columns(2, gap="medium")
+
+        with apv_col:
+            with st.container(key=apv_box_key):
+                st.markdown(
+                    f"""
+                    ### Annual Present Value of Benefits
+
+                    **APV Total Benefits**  
+                    {rupiah(tier_data["apv_total"])}
+
+                    **APV Accident Benefit**  
+                    {rupiah(tier_data["apv_accident"])}
+
+                    **APV Illness Benefit**  
+                    {rupiah(tier_data["apv_illness"])}
+
+                    **APV Other Causes Benefit**  
+                    {rupiah(tier_data["apv_other"])}
+                    """
+                )
+
+        with annuity_col:
+            with st.container(key=annuity_box_key):
+                st.markdown(
+                    f"""
+                    ### Annuity Values
+
+                    **Annual Annuity-Due**  
+                    {tier_data["annuity_annual"]:.6f}
+
+                    **Monthly Annuity-Due**  
+                    {tier_data["annuity_monthly"]:.6f}
+                    """
+                )
+
+        with st.container(key=net_premium_box_key):
+            st.markdown(
+                f"""
+                ### Net (Level) Premium
+
+                **Net Annual Premium**  
+                {rupiah(tier_data["net_yearly_premium"])}
+
+                **Net Monthly Premium**  
+                {rupiah(tier_data["net_monthly_premium"])}
+                """
+            )
+
+        detail_boxes = [
+            {
+                "box_key": f"{detail_box_prefix}_apv_settlement_box",
+                "title": "APV Settlement Expense First Year",
+                "value_text": rupiah(tier_data["apv_settlement"])
+            },
+            {
+                "box_key": f"{detail_box_prefix}_initial_fixed_box",
+                "title": "Initial Fixed Expense",
+                "value_text": rupiah(e0)
+            },
+            {
+                "box_key": f"{detail_box_prefix}_renewal_fixed_box",
+                "title": "Renewal Fixed Expense",
+                "value_text": rupiah(e1)
+            },
+            {
+                "box_key": f"{detail_box_prefix}_initial_percentage_box",
+                "title": "Initial Percentage Expense",
+                "value_text": percent(c0)
+            },
+            {
+                "box_key": f"{detail_box_prefix}_renewal_percentage_box",
+                "title": "Renewal Percentage Expense",
+                "value_text": percent(c1)
+            }
+        ]
+
+        if underwriting_info["smoker_level"] != "none":
+            detail_boxes.append(
+                {
+                    "box_key": f"{detail_box_prefix}_smoker_loading_box",
+                    "title": "Smoker Premium Loading",
+                    "value_text": percent(underwriting_info["smoker_loading"])
+                }
+            )
+
+        if underwriting_info["alcohol_level"] != "none":
+            detail_boxes.append(
+                {
+                    "box_key": f"{detail_box_prefix}_alcohol_loading_box",
+                    "title": "Alcohol Premium Loading",
+                    "value_text": percent(underwriting_info["alcohol_loading"])
+                }
+            )
+
+        if underwriting_info["dangerous_hobby"] == "yes":
+            detail_boxes.append(
+                {
+                    "box_key": f"{detail_box_prefix}_dangerous_hobby_loading_box",
+                    "title": "Dangerous Hobby Premium Loading",
+                    "value_text": percent(underwriting_info["dangerous_hobby_loading"])
+                }
+            )
+
+        show_detail_boxes_two_columns(detail_boxes)
+
+        if underwriting_info["total_loading"] > 0:
+            gross_premium_title = "Gross Premium"
+        else:
+            gross_premium_title = "Gross Premium"
+
+        with st.container(key=gross_premium_box_key):
+            st.markdown(
+                f"""
+                ### {gross_premium_title}
+
+                **Gross Yearly Premium**  
+                {rupiah(tier_data["adjusted_gross_yearly_premium"])}
+
+                **Gross Monthly Premium**  
+                {rupiah(tier_data["adjusted_gross_monthly_premium"])}
+                """
+            )
+
+
 # =========================
 # WEBSITE DESIGN
 # =========================
@@ -672,7 +853,7 @@ st.markdown(
     }}
 
     .st-key-products_box {{
-        background-color: #238EDB !important;
+        background-color: #475EFF !important;
         color: white !important;
         padding: 25px;
         border-radius: 20px;
@@ -743,6 +924,157 @@ st.markdown(
         margin-bottom: 20px;
     }}
 
+    .st-key-actuarial_tall_box {{
+        background-color: #475EFF !important;
+        color: white !important;
+        padding: 25px;
+        border-radius: 20px;
+        min-height: 560px;
+        box-sizing: border-box;
+        margin-top: 30px;
+    }}
+
+    .st-key-actuarial_yes1_box {{
+        background-color: white !important;
+        color: #238EDB !important;
+        padding: 25px;
+        width: 1500px;
+        border-radius: 20px;
+        min-height: 520px;
+        box-sizing: border-box;
+        margin-top: 30px;
+    }}
+
+    .st-key-actuarial_yes2_box {{
+        background-color: white !important;
+        color: #238EDB !important;
+        padding: 25px;
+        border-radius: 20px;
+        min-height: 100px;
+        box-sizing: border-box;
+        margin-top: 30px;
+    }}
+
+    .st-key-tier_one_box,
+    .st-key-tier_two_box,
+    .st-key-tier_three_box {{
+        background-color: white !important;
+        color: #238EDB !important;
+        padding: 22px;
+        border-radius: 20px;
+        min-height: 300px;
+        box-sizing: border-box;
+        margin-top: 28px;
+    }}
+
+    .tier-main-title {{
+        color: #238EDB !important;
+        font-family: 'Josefin Sans', sans-serif;
+        font-size: 48px !important;
+        font-weight: 800 !important;
+        line-height: 1.15;
+        margin-bottom: 16px;
+    }}
+
+    .st-key-tier_one_apv_box,
+    .st-key-tier_one_annuity_box,
+    .st-key-tier_one_net_premium_box,
+    .st-key-tier_one_gross_premium_box,
+    .st-key-tier_one_apv_settlement_box,
+    .st-key-tier_one_initial_fixed_box,
+    .st-key-tier_one_renewal_fixed_box,
+    .st-key-tier_one_initial_percentage_box,
+    .st-key-tier_one_renewal_percentage_box,
+    .st-key-tier_one_smoker_loading_box,
+    .st-key-tier_one_alcohol_loading_box,
+    .st-key-tier_one_dangerous_hobby_loading_box,
+    .st-key-tier_two_apv_box,
+    .st-key-tier_two_annuity_box,
+    .st-key-tier_two_net_premium_box,
+    .st-key-tier_two_gross_premium_box,
+    .st-key-tier_two_apv_settlement_box,
+    .st-key-tier_two_initial_fixed_box,
+    .st-key-tier_two_renewal_fixed_box,
+    .st-key-tier_two_initial_percentage_box,
+    .st-key-tier_two_renewal_percentage_box,
+    .st-key-tier_two_smoker_loading_box,
+    .st-key-tier_two_alcohol_loading_box,
+    .st-key-tier_two_dangerous_hobby_loading_box,
+    .st-key-tier_three_apv_box,
+    .st-key-tier_three_annuity_box,
+    .st-key-tier_three_net_premium_box,
+    .st-key-tier_three_gross_premium_box,
+    .st-key-tier_three_apv_settlement_box,
+    .st-key-tier_three_initial_fixed_box,
+    .st-key-tier_three_renewal_fixed_box,
+    .st-key-tier_three_initial_percentage_box,
+    .st-key-tier_three_renewal_percentage_box,
+    .st-key-tier_three_smoker_loading_box,
+    .st-key-tier_three_alcohol_loading_box,
+    .st-key-tier_three_dangerous_hobby_loading_box {{
+        background-color: #F2F8FF !important;
+        color: #238EDB !important;
+        padding: 12px 14px;
+        border-radius: 14px;
+        border: 1px solid #238EDB;
+        min-height: 105px;
+        box-sizing: border-box;
+        margin-top: 12px;
+    }}
+
+    .st-key-actuarial_tall_box h1,
+    .st-key-actuarial_tall_box h2,
+    .st-key-actuarial_tall_box h3,
+    .st-key-actuarial_tall_box p,
+    .st-key-actuarial_tall_box li {{
+        color: white !important;
+        font-family: 'Josefin Sans', sans-serif;
+        font-size: 22px;
+        line-height: 1.35;
+    }}
+
+    .st-key-actuarial_yes1_box h1,
+    .st-key-actuarial_yes1_box h2,
+    .st-key-actuarial_yes1_box h3,
+    .st-key-actuarial_yes1_box p,
+    .st-key-actuarial_yes1_box li,
+    .st-key-actuarial_yes2_box h1,
+    .st-key-actuarial_yes2_box h2,
+    .st-key-actuarial_yes2_box h3,
+    .st-key-actuarial_yes2_box p,
+    .st-key-actuarial_yes2_box li,
+    .st-key-tier_one_box h1,
+    .st-key-tier_one_box h2,
+    .st-key-tier_one_box h3,
+    .st-key-tier_one_box p,
+    .st-key-tier_one_box li,
+    .st-key-tier_two_box h1,
+    .st-key-tier_two_box h2,
+    .st-key-tier_two_box h3,
+    .st-key-tier_two_box p,
+    .st-key-tier_two_box li,
+    .st-key-tier_three_box h1,
+    .st-key-tier_three_box h2,
+    .st-key-tier_three_box h3,
+    .st-key-tier_three_box p,
+    .st-key-tier_three_box li {{
+        color: #238EDB !important;
+        font-family: 'Josefin Sans', sans-serif;
+        font-size: 20px;
+        line-height: 1.25;
+    }}
+
+    .st-key-actuarial_tall_box h3,
+    .st-key-actuarial_yes1_box h3,
+    .st-key-actuarial_yes2_box h3,
+    .st-key-tier_one_box h3,
+    .st-key-tier_two_box h3,
+    .st-key-tier_three_box h3 {{
+        font-size: 25px !important;
+        font-weight: 800 !important;
+        margin-bottom: 8px !important;
+    }}
+
     div.stButton > button {{
         background-color: white !important;
         color: #238EDB !important;
@@ -803,18 +1135,78 @@ st.markdown(
         .st-key-contact_box,
         .st-key-mission_box,
         .st-key-products_box,
-        .st-key-premium_calculator_box {{
-            padding: 18px;
+        .st-key-premium_calculator_box,
+        .st-key-actuarial_tall_box,
+        .st-key-actuarial_yes1_box,
+        .st-key-actuarial_yes2_box,
+        .st-key-tier_one_box,
+        .st-key-tier_two_box,
+        .st-key-tier_three_box {{
+            padding: 16px;
             border-radius: 18px;
             min-height: auto;
-            margin-top: 20px;
+            margin-top: 18px;
+            width: auto;
+        }}
+
+        .tier-main-title {{
+            font-size: 32px !important;
+            margin-bottom: 14px;
+        }}
+
+        .st-key-tier_one_apv_box,
+        .st-key-tier_one_annuity_box,
+        .st-key-tier_one_net_premium_box,
+        .st-key-tier_one_gross_premium_box,
+        .st-key-tier_one_apv_settlement_box,
+        .st-key-tier_one_initial_fixed_box,
+        .st-key-tier_one_renewal_fixed_box,
+        .st-key-tier_one_initial_percentage_box,
+        .st-key-tier_one_renewal_percentage_box,
+        .st-key-tier_one_smoker_loading_box,
+        .st-key-tier_one_alcohol_loading_box,
+        .st-key-tier_one_dangerous_hobby_loading_box,
+        .st-key-tier_two_apv_box,
+        .st-key-tier_two_annuity_box,
+        .st-key-tier_two_net_premium_box,
+        .st-key-tier_two_gross_premium_box,
+        .st-key-tier_two_apv_settlement_box,
+        .st-key-tier_two_initial_fixed_box,
+        .st-key-tier_two_renewal_fixed_box,
+        .st-key-tier_two_initial_percentage_box,
+        .st-key-tier_two_renewal_percentage_box,
+        .st-key-tier_two_smoker_loading_box,
+        .st-key-tier_two_alcohol_loading_box,
+        .st-key-tier_two_dangerous_hobby_loading_box,
+        .st-key-tier_three_apv_box,
+        .st-key-tier_three_annuity_box,
+        .st-key-tier_three_net_premium_box,
+        .st-key-tier_three_gross_premium_box,
+        .st-key-tier_three_apv_settlement_box,
+        .st-key-tier_three_initial_fixed_box,
+        .st-key-tier_three_renewal_fixed_box,
+        .st-key-tier_three_initial_percentage_box,
+        .st-key-tier_three_renewal_percentage_box,
+        .st-key-tier_three_smoker_loading_box,
+        .st-key-tier_three_alcohol_loading_box,
+        .st-key-tier_three_dangerous_hobby_loading_box {{
+            padding: 12px;
+            border-radius: 14px;
+            min-height: auto;
+            margin-top: 10px;
         }}
 
         .st-key-about_box h3,
         .st-key-contact_box h3,
         .st-key-mission_box h3,
-        .st-key-products_box h3 {{
-            font-size: 24px !important;
+        .st-key-products_box h3,
+        .st-key-actuarial_tall_box h3,
+        .st-key-actuarial_yes1_box h3,
+        .st-key-actuarial_yes2_box h3,
+        .st-key-tier_one_box h3,
+        .st-key-tier_two_box h3,
+        .st-key-tier_three_box h3 {{
+            font-size: 22px !important;
         }}
 
         .st-key-about_box p,
@@ -824,9 +1216,21 @@ st.markdown(
         .st-key-mission_box p,
         .st-key-mission_box li,
         .st-key-products_box p,
-        .st-key-products_box li {{
-            font-size: 16px !important;
-            line-height: 1.4 !important;
+        .st-key-products_box li,
+        .st-key-actuarial_tall_box p,
+        .st-key-actuarial_tall_box li,
+        .st-key-actuarial_yes1_box p,
+        .st-key-actuarial_yes1_box li,
+        .st-key-actuarial_yes2_box p,
+        .st-key-actuarial_yes2_box li,
+        .st-key-tier_one_box p,
+        .st-key-tier_one_box li,
+        .st-key-tier_two_box p,
+        .st-key-tier_two_box li,
+        .st-key-tier_three_box p,
+        .st-key-tier_three_box li {{
+            font-size: 15px !important;
+            line-height: 1.35 !important;
         }}
 
         .map-frame {{
@@ -867,6 +1271,10 @@ st.markdown(
             font-size: 14px;
         }}
 
+        .tier-main-title {{
+            font-size: 28px !important;
+        }}
+
         .st-key-about_box p,
         .st-key-about_box li,
         .st-key-contact_box p,
@@ -874,8 +1282,20 @@ st.markdown(
         .st-key-mission_box p,
         .st-key-mission_box li,
         .st-key-products_box p,
-        .st-key-products_box li {{
-            font-size: 15px !important;
+        .st-key-products_box li,
+        .st-key-actuarial_tall_box p,
+        .st-key-actuarial_tall_box li,
+        .st-key-actuarial_yes1_box p,
+        .st-key-actuarial_yes1_box li,
+        .st-key-actuarial_yes2_box p,
+        .st-key-actuarial_yes2_box li,
+        .st-key-tier_one_box p,
+        .st-key-tier_one_box li,
+        .st-key-tier_two_box p,
+        .st-key-tier_two_box li,
+        .st-key-tier_three_box p,
+        .st-key-tier_three_box li {{
+            font-size: 14px !important;
         }}
     }}
     </style>
@@ -1008,6 +1428,9 @@ with st.container(key="products_box"):
 # =========================
 # PREMIUM CALCULATOR
 # =========================
+
+calculation_was_successful = False
+tier_calculation_details = {}
 
 with st.container(border=True, key="premium_calculator_box"):
 
@@ -1154,6 +1577,13 @@ with st.container(border=True, key="premium_calculator_box"):
                 other_bt = benefits["other_bt"]
                 illness_bt = benefits["illness_bt"]
 
+                if tier_name == "Premium":
+                    display_tier_name = "Tier 1"
+                elif tier_name == "Standard":
+                    display_tier_name = "Tier 2"
+                else:
+                    display_tier_name = "Tier 3"
+
                 apv_accident, apv_other, apv_illness, apv_total = calculate_apv_total_whole_life(
                     table=selected_table,
                     x=x,
@@ -1197,6 +1627,27 @@ with st.container(border=True, key="premium_calculator_box"):
                     underwriting_info=underwriting_info
                 )
 
+                tier_calculation_details[display_tier_name] = {
+                    "tier_name": display_tier_name,
+                    "package_name": tier_name,
+                    "accident_bt": accident_bt,
+                    "other_bt": other_bt,
+                    "illness_bt": illness_bt,
+                    "apv_accident": apv_accident,
+                    "apv_other": apv_other,
+                    "apv_illness": apv_illness,
+                    "apv_total": apv_total,
+                    "annuity_annual": annuity_annual,
+                    "annuity_monthly": annuity_monthly,
+                    "net_yearly_premium": net_yearly_premium,
+                    "net_monthly_premium": net_monthly_premium,
+                    "gross_yearly_premium": gross_yearly_premium,
+                    "gross_monthly_premium": gross_monthly_premium,
+                    "adjusted_gross_yearly_premium": adjusted_gross_yearly_premium,
+                    "adjusted_gross_monthly_premium": adjusted_gross_monthly_premium,
+                    "apv_settlement": apv_settlement
+                }
+
                 result_rows.append(
                     {
                         "Tier": tier_name,
@@ -1218,5 +1669,238 @@ with st.container(border=True, key="premium_calculator_box"):
                 hide_index=True
             )
 
+            calculation_was_successful = True
+
         except Exception as error:
             st.error(f"Calculation error: {error}")
+
+
+# =========================
+# ACTUARIAL CALCULATION BOXES
+# =========================
+
+if calculate_button and show_actuarial_calculation and calculation_was_successful:
+
+    actuarial_left_col, actuarial_right_col = st.columns([2, 1], gap="large")
+
+    with actuarial_left_col:
+        with st.container(key="actuarial_tall_box"):
+            st.markdown("""
+                ### Actuarial Formulas
+
+                For multiple decrement whole life insurance with decrement *j* :
+            """)
+
+            st.latex(r"""A_x^{(j)} = \sum_{k=0}^{\omega-x-1} v^{k+1} \, {}_k p_x^{(\tau)} \, q_{x+k}^{(j)}""")
+
+            st.markdown("""For multiple decrement whole life insurance with decrement *j*, if the benefit is deferred for *n* years""")
+
+            st.latex(r"""{}_{n|}A_x^{(j)}=\sum_{k=n}^{\omega-x-1}v^{k+1}\, {}_k p_x^{(\tau)}\, q_{x+k}^{(j)}""")
+
+            st.markdown("""For a whole life annnuity due:""")
+
+            st.latex(r"""\ddot{a}_x^{(\tau)}=\sum_{k=0}^{\omega-x-1}v^k \, {}_k p_x^{(\tau)}""")
+
+            st.markdown("""For monthly life annuity due:""")
+
+            st.latex(r"""\ddot{a}_x^{(12,\tau)}=\frac{1}{12}\sum_{k=0}^{\omega-x-1}\sum_{r=0}^{11}v^{k+\frac{r}{12}}\, {}_{k+\frac{r}{12}}p_x^{(\tau)}""")
+
+            st.markdown("""Therefore the net annual premium becomes:""")
+
+            st.latex(r"""P =\frac{B_{\text{accident}} A_x^{(\text{accident})}+B_{\text{illness}} {}_{n|}A_x^{(\text{illness})}+B_{\text{other causes}} A_x^{(\text{other causes})}}{\ddot{a}_x}""")
+
+            st.markdown("""Net monthly premium:""")
+
+            st.latex(r"""P =\frac{B_{\text{accident}} A_x^{(\text{accident})}+B_{\text{illness}} {}_{n|}A_x^{(\text{illness})}+B_{\text{other causes}} A_x^{(\text{other causes})}}{12\ddot{a}_x^{(12,\tau)}}""")
+
+            st.markdown("### Gross Premium")
+
+            st.markdown("""Gross Yearly Premium:""")
+
+            st.latex(r"""G\ddot{a}_x^{(\tau)}=\text{APV}(Benefit)+\text{APV}(Settlement)+e_0+c_0G+\left(e_1+c_1G\right)\left(\ddot{a}_x^{(\tau)}-1\right)""")
+
+            st.markdown("""Annualized gross premium payable monthly:""")
+
+            st.latex(r"""G^{(12)}=\frac{\text{APV}(Benefit)+\text{APV}(Settlement)+e_0+e_1\left(\ddot{a}_x^{(\tau)}-1\right)}{\ddot{a}_x^{(12,\tau)}-c_0-c_1\left(\ddot{a}_x^{(\tau)}-1\right)}""")
+
+            st.markdown("""Therefore, the actual monthly gross premium is:""")
+
+            st.latex(r"""G_m=\frac{G^{(12)}}{12}""")
+
+    with actuarial_right_col:
+        with st.container(key="actuarial_yes1_box"):
+            st.markdown("""### Expenses""")
+
+            expense_data = {
+                "Expense Item": [
+                    "Medical checkup",
+                    "Taxes",
+                    "Policy administration",
+                    "First-year commission",
+                    "First-year general expense",
+                    "Profit loading",
+                    "Renewal admin",
+                    "Renewal commission",
+                    "Renewal general expense",
+                    "Renewal profit loading / other loading",
+                    "Settlement cost",
+                ],
+                "Amount / Percentage": [
+                    "Rp1,750,000",
+                    "Rp10,000",
+                    "Rp50,000",
+                    "20%",
+                    "25%",
+                    "15%",
+                    "Rp60,000",
+                    "5%",
+                    "10%",
+                    "15%",
+                    "Rp250,000",
+                ],
+                "Notation": [
+                    "e₀",
+                    "e₀",
+                    "e₀",
+                    "c₀",
+                    "c₀",
+                    "c₀",
+                    "e₁",
+                    "c₁",
+                    "c₁",
+                    "c₁",
+                    "Claim expense",
+                ],
+                "Timing": [
+                    "Policy issue only",
+                    "Policy issue only",
+                    "Policy issue only",
+                    "First year only",
+                    "First year only",
+                    "First year only",
+                    "Every renewal year",
+                    "Every renewal year",
+                    "Every renewal year",
+                    "Every renewal year",
+                    "Once when claim occurs",
+                ],
+            }
+
+            expense_df = pd.DataFrame(expense_data)
+
+            st.dataframe(
+                expense_df,
+                use_container_width=True,
+                hide_index=True
+            )
+
+            st.markdown("### Grouped Expense Values")
+
+            grouped_e0 = 1_750_000 + 10_000 + 50_000
+            grouped_c0 = 0.20 + 0.25 + 0.15
+            grouped_e1 = 60_000
+            grouped_c1 = 0.05 + 0.10 + 0.15
+            grouped_settlement_cost = 250_000
+
+            grouped_data = {
+                "Notation": [
+                    "e₀",
+                    "c₀",
+                    "e₁",
+                    "c₁",
+                    "Settlement cost",
+                ],
+                "Meaning": [
+                    "Initial fixed expense",
+                    "Initial percentage expense",
+                    "Renewal fixed expense",
+                    "Renewal percentage expense",
+                    "Claim settlement cost",
+                ],
+                "Calculation": [
+                    "1,750,000 + 10,000 + 50,000",
+                    "20% + 25% + 15%",
+                    "60,000",
+                    "5% + 10% + 15%",
+                    "250,000",
+                ],
+                "Final Value": [
+                    f"Rp{grouped_e0:,.0f}",
+                    f"{grouped_c0:.0%}",
+                    f"Rp{grouped_e1:,.0f}",
+                    f"{grouped_c1:.0%}",
+                    f"Rp{grouped_settlement_cost:,.0f}",
+                ],
+            }
+
+            grouped_df = pd.DataFrame(grouped_data)
+
+            st.dataframe(
+                grouped_df,
+                use_container_width=True,
+                hide_index=True
+            )
+
+        with st.container(key="actuarial_yes2_box"):
+            st.markdown("""### Decrement Table""")
+
+            components.html(
+                f"""
+                <iframe
+                    src="{GOOGLE_SHEET_PREVIEW_URL}"
+                    width="100%"
+                    height="1000"
+                    style="
+                        border: 1px solid #238EDB;
+                        border-radius: 15px;
+                        background-color: white;
+                    ">
+                </iframe>
+                """,
+                height=450,
+                scrolling=True
+            )
+
+
+    # =========================
+    # TIER CALCULATION BOXES
+    # =========================
+
+    show_tier_calculation_box(
+        tier_box_key="tier_one_box",
+        apv_box_key="tier_one_apv_box",
+        annuity_box_key="tier_one_annuity_box",
+        net_premium_box_key="tier_one_net_premium_box",
+        gross_premium_box_key="tier_one_gross_premium_box",
+        detail_box_prefix="tier_one",
+        tier_title="Tier 1: Premium Protection",
+        tier_data=tier_calculation_details["Tier 1"],
+        underwriting_info=underwriting_info,
+        dangerous_hobby_detail=dangerous_hobby_detail
+    )
+
+    show_tier_calculation_box(
+        tier_box_key="tier_two_box",
+        apv_box_key="tier_two_apv_box",
+        annuity_box_key="tier_two_annuity_box",
+        net_premium_box_key="tier_two_net_premium_box",
+        gross_premium_box_key="tier_two_gross_premium_box",
+        detail_box_prefix="tier_two",
+        tier_title="Tier 2: Standard Protection",
+        tier_data=tier_calculation_details["Tier 2"],
+        underwriting_info=underwriting_info,
+        dangerous_hobby_detail=dangerous_hobby_detail
+    )
+
+    show_tier_calculation_box(
+        tier_box_key="tier_three_box",
+        apv_box_key="tier_three_apv_box",
+        annuity_box_key="tier_three_annuity_box",
+        net_premium_box_key="tier_three_net_premium_box",
+        gross_premium_box_key="tier_three_gross_premium_box",
+        detail_box_prefix="tier_three",
+        tier_title="Tier 3: Basic Protection",
+        tier_data=tier_calculation_details["Tier 3"],
+        underwriting_info=underwriting_info,
+        dangerous_hobby_detail=dangerous_hobby_detail
+    )
